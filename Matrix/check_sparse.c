@@ -49,10 +49,10 @@ void sparseMatrixRepresentation(int row, int column, int matrix[row][column]){
     for(int i=0; i<row; i++){
         for(int j=0; j<column; j++){
             if(matrix[i][j] != 0){
-                sparse_matrix_representation[k][0] = i;
-                sparse_matrix_representation[k][1] = j;
-                sparse_matrix_representation[k][2] = matrix[i][j];
-                k++;
+                sparse_matrix_representation[k][0] = i; //set row
+                sparse_matrix_representation[k][1] = j; //set column
+                sparse_matrix_representation[k][2] = matrix[i][j]; //set value of row,column position
+                k++; //increment k to accomodate the next non zero elements
             }
         }
     }
@@ -74,10 +74,10 @@ void tripletToDense(int row, int column, int non_zero, int triplet_representatio
     //fill the non_zero values from the triplet representation
     for (int i = 0; i < non_zero; i++)
     {
-        int r = triplet_representation[i][0];
-        int c = triplet_representation[i][1];
-        int value = triplet_representation[i][2];
-        dense[r][c] = value;
+        int r = triplet_representation[i][0]; //row
+        int c = triplet_representation[i][1]; //column
+        int value = triplet_representation[i][2]; //fetch value
+        dense[r][c] = value; //set the value to the row,column position
     }
     printf("The dense matrix converted from triplet representation is: \n");
     displayMatrix(row, column, dense);
