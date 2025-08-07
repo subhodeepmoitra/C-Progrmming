@@ -1,5 +1,11 @@
 #include<stdio.h>
 
+// Prototype declaration
+int checkSparse(int row, int column, int matrix[row][column]);
+void displayMatrix(int row, int column, int matrix[row][column]);
+void sparseMatrixRepresentation(int row, int column, int matrix[row][column]);
+void tripletToDense(int row, int column, int non_zero, int triplet_representation[non_zero][3]);
+
 int checkSparse(int row, int column, int matrix[row][column]){
     int zero=0, non_zero=0;
     for(int i=0; i<row; i++){
@@ -39,20 +45,43 @@ void sparseMatrixRepresentation(int row, int column, int matrix[row][column]){
             }
         }
     }
-    int sparse_matrix[non_zero][3], k=0;
+    int sparse_matrix_representation[non_zero][3], k=0;
     for(int i=0; i<row; i++){
         for(int j=0; j<column; j++){
             if(matrix[i][j] != 0){
-                sparse_matrix[k][0] = i;
-                sparse_matrix[k][1] = j;
-                sparse_matrix[k][2] = matrix[i][j];
+                sparse_matrix_representation[k][0] = i;
+                sparse_matrix_representation[k][1] = j;
+                sparse_matrix_representation[k][2] = matrix[i][j];
                 k++;
             }
         }
     }
     printf("The sparse matrix representation is: \n");
-    displayMatrix(non_zero, 3, sparse_matrix);    
+    displayMatrix(non_zero, 3, sparse_matrix_representation);
+    printf("Attempting to convert this sparse representation to it's dense form... \n");
+    tripletToDense(row, column, non_zero, sparse_matrix_representation);
 
+}
+
+void tripletToDense(int row, int column, int non_zero, int triplet_representation[non_zero][3]){
+    int dense[row][column];
+    //initialize the dense matrix with 0
+    for(int i=0; i<row; i++){
+        for(int j=0; j<column; j++){
+            dense[i][j] = 0;
+        }
+    }
+    //fill the non_zero values from the triplet representation
+    for (int i = 0; i < non_zero; i++)
+    {
+        int r = triplet_representation[i][0];
+        int c = triplet_representation[i][1];
+        int value = triplet_representation[i][2];
+        dense[r][c] = value;
+    }
+    printf("The dense matrix converted from triplet representation is: \n");
+    displayMatrix(row, column, dense);
+    
 }
 
 int main(){
