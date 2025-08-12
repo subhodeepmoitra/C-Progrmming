@@ -20,7 +20,6 @@ void displayTriplet(int rows, int triplet[][3]) {
 }
 
 // create dense matrix reconstructed from triplet
-//void TripletToDense(int tripletRows, int triplet[][3], int dense[ROW][COL]) {
 void TripletToDense(int triplet[][3], int dense[ROW][COL]) {
     int nonZero = triplet[0][2]; //since the no. of non zero elements are present in the 3rd column of the triplet header
 
@@ -51,9 +50,7 @@ void createSparseMatrix(int row, int column, int a[ROW][COL]) {
 }
 
 // Convert sparse to triplet and display
-//void convertToTriplet(int row, int column, int sparse[ROW][COL], int triplet[ROW * COL + 1][3]) {
-void convertToTriplet(int row, int column, int sparse[ROW][COL], int triplet[][3])  // no fixed bound
-{    
+void convertToTriplet(int row, int column, int sparse[ROW][COL], int triplet[][3]){    
     int k = 1; // index for triplet rows starting from 1 since 0 is header
     for (int i = 0; i < row; i++) {
         for (int j = 0; j < column; j++) {
@@ -81,21 +78,6 @@ int main() {
 
     printf("Enter number of rows and columns: ");
     scanf("%d %d", &row, &column);
-
-    //createSparseMatrix(row, column, sparse);
-
-    //printf("\nSparse Matrix:\n");
-    //displayMatrix(row, column, sparse);
-
-    //convertToTriplet(row, column, sparse, triplet);
-
-    //printf("\nTriplet Form:\n");
-    //displayTriplet(triplet[0][2] + 1, triplet);  // header + data rows
-
-    //TripletToDense(triplet[0][2] + 1, triplet, dense);
-
-    //printf("\nDense Matrix from Triplet:\n");
-    //displayMatrix(row, column, dense);
 
     createSparseMatrix(row, column, sparse);
 
