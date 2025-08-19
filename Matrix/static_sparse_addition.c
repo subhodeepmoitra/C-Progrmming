@@ -69,21 +69,37 @@ void addTriplets(int t1[][3], int t2[][3], int tSum[][3]) {// Func. to add two s
     tSum[0][1] = cols;
 
     while (i <= t1[0][2] && j <= t2[0][2]) {
-        if (t1[i][0] < t2[j][0] || 
-           (t1[i][0] == t2[j][0] && t1[i][1] < t2[j][1])) {
+    if (t1[i][0] < t2[j][0]) {
+        // if row of t1 is smaller then copy t1
+        tSum[k][0] = t1[i][0];
+        tSum[k][1] = t1[i][1];
+        tSum[k][2] = t1[i][2];
+        i++; k++;
+    }
+    else if (t1[i][0] > t2[j][0]) {
+        // if row of t2 is smaller then copy t2
+        tSum[k][0] = t2[j][0];
+        tSum[k][1] = t2[j][1];
+        tSum[k][2] = t2[j][2];
+        j++; k++;
+    }
+    else { // if the rows are equal
+        if (t1[i][1] < t2[j][1]) {
+            // column of t1 is smaller
             tSum[k][0] = t1[i][0];
             tSum[k][1] = t1[i][1];
             tSum[k][2] = t1[i][2];
             i++; k++;
         }
-        else if (t2[j][0] < t1[i][0] || 
-                (t2[j][0] == t1[i][0] && t2[j][1] < t1[i][1])) {
+        else if (t1[i][1] > t2[j][1]) {
+            // column of t2 is smaller
             tSum[k][0] = t2[j][0];
             tSum[k][1] = t2[j][1];
             tSum[k][2] = t2[j][2];
             j++; k++;
         }
         else {
+            // when same row and column then add values
             int sumVal = t1[i][2] + t2[j][2];
             if (sumVal != 0) {
                 tSum[k][0] = t1[i][0];
@@ -92,8 +108,10 @@ void addTriplets(int t1[][3], int t2[][3], int tSum[][3]) {// Func. to add two s
                 k++;
             }
             i++; j++;
+            }
         }
     }
+
 
     while (i <= t1[0][2]) {
         tSum[k][0] = t1[i][0];
