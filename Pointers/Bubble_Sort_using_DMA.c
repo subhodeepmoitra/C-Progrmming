@@ -14,11 +14,11 @@ void bubbleSort(int *arr, int size){
     {
         for (int j = 0; j < size-i-1; j++)
         {
-            if (arr[j] > arr[j+1])
+            if (arr[j] > arr[j+1]) //*(arr+j) > *(arrj+1) if using pointer arithmetic
             {
-                int temp = arr[j];
-                arr[j] = arr[j+1];
-                arr[j+1] = temp;
+                int temp = arr[j]; // int temp = *(arr+j)
+                arr[j] = arr[j+1]; // *(arr+j) = *(arr+j+1)
+                arr[j+1] = temp; // *(arr+j+1) = temp
             }
             
         }
