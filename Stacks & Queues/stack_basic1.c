@@ -29,37 +29,19 @@ int isEmpty(struct Stack stack){
 }
 
 void push(struct Stack * stack, int data){
-    if(isFull(*stack)){
-        printf("Stack Overflow");
-    } else {
-        stack->top++;
-        stack->arr[stack->top] = data;
-        printf("Pushed %d successfully\n", data);
-    }
+    stack->top++;
+    stack->arr[stack->top] = data;
+    printf("Pushed %d successfully\n", data);
 }
 
 int pop(struct Stack * stack){
-    if (isEmpty(*stack))
-    {
-        printf("Underflow");
-        return -1;
-    } else {
-        int data = stack->arr[stack->top];
-        stack->top--;
-        return data;
-    }
-
+    int data = stack->arr[stack->top];
+    stack->top--;
+    return data;
 }
 
 int peek(struct Stack stack){
-    if (isEmpty(stack))
-    {
-        printf("Stack is empty\n");
-        return -1;
-    } else {
-        return stack.arr[stack.top];
-    }
-    
+   return stack.arr[stack.top];
 }
 
 void display(struct Stack stack){
@@ -94,25 +76,35 @@ int main(){
         switch (choice)
         {
         case 1:
-            printf("Enter data to push: ");
-            scanf("%d",&data);
-            push(&stack,data);
+            if (isFull(stack))
+            {
+                printf("Stack Overflow\n");
+            } else {
+                printf("Enter data to push: ");
+                scanf("%d",&data);
+                push(&stack,data);
+            }
             break;
 
         case 2:
-            data = pop(&stack);
-            if (data != -1)
+            if (isEmpty(stack))
             {
+                printf("Underflow: Stack is empty\n");
+            } else {
+                data = pop(&stack);
                 printf("Popped element %d successfully\n", data);
             }
             break;
 
         case 3:
-            data = peek(stack);
-            if (data != -1)
+            if (isEmpty(stack))
             {
+                printf("Stack is empty\n");
+            } else {
+                data = peek(stack);
                 printf("Top data is %d \n", data);
             }
+            
             break;
 
         case 4:
