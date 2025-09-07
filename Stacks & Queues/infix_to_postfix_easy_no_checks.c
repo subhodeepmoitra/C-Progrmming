@@ -10,7 +10,6 @@ struct Stack {
     int top;
 };
 
-void initializeStack(struct Stack * stack);
 int isEmpty(struct Stack stack);
 int isFull(struct Stack stack);
 void push(struct Stack * stack, char data);
@@ -18,10 +17,6 @@ char pop(struct Stack * stack);
 char peek(struct Stack stack);
 int getPriority(char ch);
 void infix2postfix(char s[], char t[]);
-
-void initializeStack(struct Stack * stack) {
-    stack->top = -1;
-}
 
 int isFull(struct Stack stack) {
     return stack.top == MAX - 1;
@@ -32,70 +27,65 @@ int isEmpty(struct Stack stack) {
 }
 
 void push(struct Stack * stack, char data) {
-    /*if (isFull(*stack)) {
-        printf("Stack Overflow\n");
-        return;
-    }*/
+    
     stack->top++;
     stack->arr[stack->top] = data;
 }
 
 char pop(struct Stack * stack) {
-    /*if (isEmpty(*stack)) {
-        printf("Stack Underflow\n");
-        return '\0';
-    }*/
+   
     char data = stack->arr[stack->top];
     stack->top--;
     return data;
 }
 
 char peek(struct Stack stack) {
-    /*if (isEmpty(stack)) {
-        return '\0';
-    }*/
+   
     return stack.arr[stack.top];
 }
 
 int getPriority(char ch) {
     if (ch == '+' || ch == '-') {
+        return 0;
+    } else {
         return 1;
-    } else if (ch == '*' || ch == '/') {
-        return 2;
     }
-    return 0; //the default priority for brackets
 }
 
 void infix2postfix(char s[], char t[]) {
     struct Stack st;
-    initializeStack(&st);
+    st.top = -1;
     int i = 0, j = 0;
 
-    while (s[i] != '\0') { //looping till null character is received
-        if (isalnum(s[i])) {
-            t[j++] = s[i];
-        }
+   while (s[i] != '\0') { // Loop until null character is encountered
 
-        if (s[i] == '(') {
-            push(&st, s[i]);
-        }
+    // Checking (
+    if (s[i] == '(') {
+        push(&st, s[i]);
+    }
 
-        if (s[i] == ')') {
-            while (!isEmpty(st) && peek(st) != '(') {
-                t[j++] = pop(&st);
-            }
-            if (!isEmpty(st) && peek(st) == '(') {
-                pop(&st);
-            }
+    // Check )
+    if (s[i] == ')') {
+        while (peek(st) != '(') {
+            t[j++] = pop(&st);
         }
+        pop(&st); // Pop the '('
+    }
 
-        if (s[i] == '+' || s[i] == '-' || s[i] == '*' || s[i] == '/' || s[i] == '%') {
-            while (!isEmpty(st) && peek(st) != '(' && getPriority(peek(st)) >= getPriority(s[i])) { //checking proprity
-                t[j++] = pop(&st);
-            }
-            push(&st, s[i]);
+    // Checking if the current char is num. or dig.
+    if (isalpha(s[i]) || isdigit(s[i])) {
+        t[j++] = s[i];
+    }
+
+    // Checking if the current char is operator -> if 'yes' then check priority
+    if (s[i] == '+' || s[i] == '-' || s[i] == '*' || s[i] == '/' || s[i] == '%') {
+        while (!isEmpty(st) && peek(st) != '(' && getPriority(peek(st)) >= getPriority(s[i])) {
+            t[j++] = pop(&st);
         }
-        i++;
+        push(&st, s[i]);
+    }
+
+    i++; // Moving to next char
     }
 
     while (!isEmpty(st)) {
