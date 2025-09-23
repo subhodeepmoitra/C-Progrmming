@@ -151,6 +151,37 @@ void deleteAtPosition(Node** head, int pos) {
     free(nodeToDelete);
 }
 
+void deleteAtPosition1(Node** head, int pos){
+    Node* temp = *head;
+    Node *t;
+    int i;
+    if (*head == NULL)
+    {
+        printf("Empty List");
+    } else {
+        if (pos == 1)
+        {
+            *head = temp->next;
+            free(temp);
+        } else {
+            for (i=1; i<=pos-2&&temp->next!=NULL; i++)
+            {
+                temp = temp->next;
+            }
+            if (temp -> next == NULL)
+            {
+                printf("Invalid Position");
+            } else {
+                t = temp->next;
+                temp->next = t->next;
+                free(t);
+            }
+        }
+        
+    }
+    
+}
+
 // Display linked list
 void displayList(Node* head) {
     if (head == NULL) {
@@ -210,7 +241,8 @@ int main() {
             case 6:
                 printf("Enter position: ");
                 scanf("%d", &pos);
-                deleteAtPosition(&head, pos);
+                //deleteAtPosition(&head, pos);
+                deleteAtPosition1(&head, pos);
                 break;
             case 7:
                 displayList(head);
