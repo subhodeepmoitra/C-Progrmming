@@ -197,6 +197,33 @@ void displayList(Node* head) {
     printf("NULL\n");
 }
 
+void reverseDisplay(Node* head) {
+    int num;
+    if (head != NULL)
+    {
+        num = head->data;
+        reverseDisplay(head->next);
+        printf("%d ", num);
+    }
+    
+}
+
+void physicallyReverseLL(Node** head) {
+    Node *previous, *current, *next;
+    current = *head;
+    next = current->next;
+    previous = NULL;
+    current->next = NULL;
+    while (next!=NULL)
+    {
+        previous=current;
+        current=next;
+        next=current->next;
+        current->next=previous;
+    }
+    *head = current;    
+}
+
 int main() {
     Node* head = NULL;
     int choice, value, pos;
@@ -209,7 +236,9 @@ int main() {
         printf("5. Delete at End\n");
         printf("6. Delete at Specific Position\n");
         printf("7. Display List\n");
-        printf("8. Exit\n");
+        printf("8. Display in reverse\n");
+        printf("9. Physically Reverse the LL\n");
+        printf("10. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -248,6 +277,12 @@ int main() {
                 displayList(head);
                 break;
             case 8:
+                reverseDisplay(head);
+                break;
+            case 9:
+                physicallyReverseLL(&head);
+                break;
+            case 10:
                 printf("Exiting...\n");
                 exit(0);
             default:
