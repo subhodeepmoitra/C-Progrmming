@@ -77,6 +77,7 @@ void addPoly(Poly *h1, Poly *h2, Poly **h3){
                 h2 = h2->next;
             }
         }
+    }
         while (h1)
         {
             insertEnd(h3, h1->coff, h1->power);
@@ -88,41 +89,6 @@ void addPoly(Poly *h1, Poly *h2, Poly **h3){
             h2=h2->next;
         }
     }
-}
-
-/*
-void addPoly(Poly *h1, Poly *h2, Poly **h3) {
-    // Main loop: continues as long as both polynomials have terms
-    while (h1 && h2) {
-        if (h1->power > h2->power) {
-            // Term from h1 is unique (higher power)
-            insertEnd(h3, h1->coff, h1->power);
-            h1 = h1->next;
-        } else if (h1->power < h2->power) {
-            // Term from h2 is unique (higher power)
-            insertEnd(h3, h2->coff, h2->power);
-            h2 = h2->next;
-        } else {
-            // Powers are equal, add the coefficients
-            insertEnd(h3, h1->coff + h2->coff, h1->power); // Keeps zero terms if they occur
-            h1 = h1->next;
-            h2 = h2->next;
-        }
-    }
-    
-    // FIX: Append remaining terms from h1 (MUST be OUTSIDE the main while loop)
-    while (h1) {
-        insertEnd(h3, h1->coff, h1->power);
-        h1 = h1->next;
-    }
-
-    // FIX: Append remaining terms from h2 (MUST be OUTSIDE the main while loop)
-    while (h2) {
-        insertEnd(h3, h2->coff, h2->power);
-        h2 = h2->next;
-    }
-}
-*/
 
 int main(){
     Poly *head1 = NULL, *head2 = NULL, *head3 = NULL;
