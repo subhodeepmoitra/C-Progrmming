@@ -49,6 +49,60 @@ void insertAtPosition(DNode **p, int n, int pos) {
     }
 }
 
+void deleteFirst(DNode **p) {
+    DNode *r = *p;
+    if (*p == NULL)
+    {
+        printf("Empty Linked List");
+    }
+    else {
+        if (r->next!=NULL)
+        {
+            r->next->prev=NULL;
+        }
+        *p = r->next;
+        free(r);
+    }
+}
+
+void deleteAtPosition(DNode **p, int pos) {
+    DNode *r=*p, *temp;
+    int i;
+    if (*p==NULL)
+    {
+        printf("Empty Linked List");
+    }
+    else {
+        if (pos == 1)
+        {
+            if (r->next!=NULL)
+            {
+                r->next->prev=NULL;
+            }
+            *p=r->next;
+            free(r);
+        }
+        else {
+            for(i=1; i<=pos-2&&r->next!=NULL; i++) {
+                r=r->next;
+            }
+            if (r->next==NULL)
+            {
+                printf("Invalid Position");
+            }
+            else {
+                temp=r->next;
+                r->next=temp->next;
+                if (temp->next!=NULL)
+                {
+                    temp->next->prev=r;
+                }
+                free(temp);
+            }
+        }
+    }
+}
+
 void reverseDisplay(DNode *p) {
     if (p==NULL)
     {
@@ -74,7 +128,7 @@ int main(){
 
     while (1) {
         printf("\n1. Insert at Beginning\n");
-        printf("2. Insert at End\n");
+        printf("2. Insert at Position\n");
         printf("3. Delete at Beginning\n");
         printf("4. Delete at End\n");
         printf("5. Reverse display List\n");
@@ -96,10 +150,12 @@ int main(){
                 insertAtPosition(&head, value, pos);
                 break;
             case 3:
-                //deleteAtBeginning(&head);
+                deleteFirst(&head);
                 break;
             case 4:
-               // deleteAtEnd(&head);
+                printf("Enter position: ");
+                scanf("%d", &pos);
+                deleteAtPosition(&head, pos);
                 break;
             case 5:
                 reverseDisplay(head);
