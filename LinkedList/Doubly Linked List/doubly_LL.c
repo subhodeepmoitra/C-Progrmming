@@ -19,6 +19,25 @@ void insertBeginning(DNode **p, int n) {
     *p=q;
 }
 
+void insertEnd(DNode **p, int n) {
+    DNode *q, *r;
+    q = (DNode *)malloc(sizeof(DNode));
+    q->data = n;
+    q->next = NULL;
+
+    if (*p == NULL) {
+        q->prev = NULL;
+        *p = q;
+    } else {
+        r = *p;
+        while (r->next != NULL) {
+            r = r->next;
+        }
+        r->next = q;
+        q->prev = r;
+    }
+}
+
 void insertAtPosition(DNode **p, int n, int pos) {
     DNode *q, *r;
     int i;
@@ -65,6 +84,22 @@ void deleteFirst(DNode **p) {
     }
 }
 
+void deleteLast(DNode **p) {
+    DNode *r = *p;
+    if (*p == NULL) {
+        printf("Empty Linked List");
+    } else if (r->next == NULL) {
+        free(r);
+        *p = NULL;
+    } else {
+        while (r->next != NULL) {
+            r = r->next;
+        }
+        r->prev->next = NULL;
+        free(r);
+    }
+}
+
 void deleteAtPosition(DNode **p, int pos) {
     DNode *r=*p, *temp;
     int i;
@@ -103,6 +138,17 @@ void deleteAtPosition(DNode **p, int pos) {
     }
 }
 
+void display(DNode *p) {
+    if (p == NULL) {
+        printf("Empty Linked List");
+    } else {
+        while (p != NULL) {
+            printf("%d ", p->data);
+            p = p->next;
+        }
+    }
+}
+
 void reverseDisplay(DNode *p) {
     if (p==NULL)
     {
@@ -129,10 +175,13 @@ int main(){
     while (1) {
         printf("\n1. Insert at Beginning\n");
         printf("2. Insert at Position\n");
-        printf("3. Delete at Beginning\n");
-        printf("4. Delete at End\n");
-        printf("5. Reverse display List\n");
-        printf("6. Exit\n");
+        printf("3. Insert at End\n");
+        printf("4. Delete at Beginning\n");
+        printf("5. Delete at Position\n");
+        printf("6. Delete at End\n");
+        printf("7. Reverse display List\n");
+        printf("8. Normal order display\n");
+        printf("9. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -150,17 +199,28 @@ int main(){
                 insertAtPosition(&head, value, pos);
                 break;
             case 3:
-                deleteFirst(&head);
+                printf("Enter value: ");
+                scanf("%d", &value);
+                insertEnd(&head, value);
                 break;
             case 4:
+                deleteFirst(&head);
+                break;
+            case 5:
                 printf("Enter position: ");
                 scanf("%d", &pos);
                 deleteAtPosition(&head, pos);
                 break;
-            case 5:
+            case 6:
+                deleteLast(&head);
+                break;
+            case 7:
                 reverseDisplay(head);
                 break;
-            case 6:
+            case 8:
+                display(head);
+                break;
+            case 9:
                 printf("Exiting...\n");
                 exit(0);
             default:
